@@ -24,7 +24,13 @@ const Base64 = struct {
             return n_output;
         }
 
-        const n_out: usize = try std.math.divCeil(usize, in.len, 4);
+        // Ym9hcmQ= 8
+        // board need 5
+
+        const n_out: usize = try std.math.divFloor(usize, in.len, 4);
+
+        if (in[in.len - 2] == '=') return n_out * 3 - 2;
+        if (in[in.len - 1] == '=') return n_out * 3 - 1;
 
         return n_out * 3;
     }
@@ -185,7 +191,7 @@ test "decode test without gap" {
 
     const in_result = try b.decode(allocator, in);
 
-    try testing.expectEqualDeep(in_result, expect);
+    try testing.expectEqualDeep(expect, in_result);
 }
 
 test "decode test with one gap" {
@@ -199,7 +205,7 @@ test "decode test with one gap" {
 
     const in_result = try b.decode(allocator, in);
 
-    try testing.expectEqualDeep(in_result, expect);
+    try testing.expectEqualDeep(expect, in_result);
 }
 
 test "decode test with two gap" {
@@ -213,5 +219,5 @@ test "decode test with two gap" {
 
     const in_result = try b.decode(allocator, in);
 
-    try testing.expectEqualDeep(in_result, expect);
+    try testing.expectEqualDeep(expect, in_result);
 }
