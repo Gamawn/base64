@@ -6,7 +6,7 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     const lib = b.addStaticLibrary(.{
-        .name = "own-md5",
+        .name = "base64",
         .root_source_file = b.path("src/md5.zig"),
         .target = target,
         .optimize = optimize,
