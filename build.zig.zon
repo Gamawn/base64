@@ -1,6 +1,6 @@
 .{
     .name = "base64",
-    .version = "0.0.1",
+    .version = "0.0.4",
 
     .dependencies = .{
         // See `zig fetch --save <url>` for a command-line interface for adding dependencies.
