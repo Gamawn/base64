@@ -26,7 +26,6 @@ const Base64 = struct {
 
         // Ym9hcmQ= 8
         // board need 5
-
         const n_out: usize = try std.math.divFloor(usize, in.len, 4);
 
         if (in[in.len - 2] == '=') return n_out * 3 - 2;
@@ -148,6 +147,7 @@ test "encode test without gap" {
     const b = Base64.init();
 
     const in_result = try b.encode(allocator, in);
+	defer allocator.free(in_result);
 
     try testing.expectEqualDeep(in_result, expect);
 }
@@ -162,6 +162,7 @@ test "encode test with one gap" {
     const b = Base64.init();
 
     const in_result = try b.encode(allocator, in);
+	defer allocator.free(in_result);
 
     try testing.expectEqualDeep(in_result, expect);
 }
@@ -176,6 +177,7 @@ test "encode test with two gap" {
     const b = Base64.init();
 
     const in_result = try b.encode(allocator, in);
+	defer allocator.free(in_result);
 
     try testing.expectEqualDeep(in_result, expect);
 }
@@ -190,6 +192,7 @@ test "decode test without gap" {
     const b = Base64.init();
 
     const in_result = try b.decode(allocator, in);
+	defer allocator.free(in_result);
 
     try testing.expectEqualDeep(expect, in_result);
 }
@@ -204,6 +207,7 @@ test "decode test with one gap" {
     const b = Base64.init();
 
     const in_result = try b.decode(allocator, in);
+	defer allocator.free(in_result);
 
     try testing.expectEqualDeep(expect, in_result);
 }
@@ -218,6 +222,7 @@ test "decode test with two gap" {
     const b = Base64.init();
 
     const in_result = try b.decode(allocator, in);
+	defer allocator.free(in_result);
 
     try testing.expectEqualDeep(expect, in_result);
 }
