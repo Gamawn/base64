@@ -141,13 +141,10 @@ test "encode test without gap" {
     const in = "something";
     const expect = "c29tZXRoaW5n";
 
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-
     const b = Base64.init();
 
-    const in_result = try b.encode(allocator, in);
-	defer allocator.free(in_result);
+    const in_result = try b.encode(testing.allocator, in);
+    defer testing.allocator.free(in_result);
 
     try testing.expectEqualDeep(in_result, expect);
 }
@@ -156,13 +153,10 @@ test "encode test with one gap" {
     const in = "board";
     const expect = "Ym9hcmQ=";
 
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-
     const b = Base64.init();
 
-    const in_result = try b.encode(allocator, in);
-	defer allocator.free(in_result);
+    const in_result = try b.encode(testing.allocator, in);
+    defer testing.allocator.free(in_result);
 
     try testing.expectEqualDeep(in_result, expect);
 }
@@ -171,13 +165,10 @@ test "encode test with two gap" {
     const in = "boardfd";
     const expect = "Ym9hcmRmZA==";
 
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-
     const b = Base64.init();
 
-    const in_result = try b.encode(allocator, in);
-	defer allocator.free(in_result);
+    const in_result = try b.encode(testing.allocator, in);
+    defer testing.allocator.free(in_result);
 
     try testing.expectEqualDeep(in_result, expect);
 }
@@ -186,13 +177,10 @@ test "decode test without gap" {
     const in = "c29tZXRoaW5n";
     const expect = "something";
 
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-
     const b = Base64.init();
 
-    const in_result = try b.decode(allocator, in);
-	defer allocator.free(in_result);
+    const in_result = try b.decode(testing.allocator, in);
+    defer testing.allocator.free(in_result);
 
     try testing.expectEqualDeep(expect, in_result);
 }
@@ -201,13 +189,10 @@ test "decode test with one gap" {
     const in = "Ym9hcmQ=";
     const expect = "board";
 
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-
     const b = Base64.init();
 
-    const in_result = try b.decode(allocator, in);
-	defer allocator.free(in_result);
+    const in_result = try b.decode(testing.allocator, in);
+    defer testing.allocator.free(in_result);
 
     try testing.expectEqualDeep(expect, in_result);
 }
@@ -216,13 +201,10 @@ test "decode test with two gap" {
     const in = "Ym9hcmRmZA==";
     const expect = "boardfd";
 
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-
     const b = Base64.init();
 
-    const in_result = try b.decode(allocator, in);
-	defer allocator.free(in_result);
+    const in_result = try b.decode(testing.allocator, in);
+    defer testing.allocator.free(in_result);
 
     try testing.expectEqualDeep(expect, in_result);
 }
